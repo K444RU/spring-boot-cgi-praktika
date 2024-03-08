@@ -15,14 +15,17 @@ public enum StartTime {
     TIME_18_00(LocalTime.of(18,0)),
     TIME_19_00(LocalTime.of(19,0));
 
-    private final LocalTime time;
+    private final LocalTime localTime;
 
-
-    StartTime(LocalTime time) {
-        this.time = time;
+    StartTime(LocalTime localTime) {
+        this.localTime = localTime;
     }
 
-    public LocalTime getTime(){
-        return time;
+    public LocalTime getLocalTime() {
+        return localTime;
+    }
+
+    public int getHour() {
+        return localTime.getHour();
     }
 }

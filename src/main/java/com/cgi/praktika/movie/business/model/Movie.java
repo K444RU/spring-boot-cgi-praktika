@@ -21,4 +21,8 @@ public class Movie {
         this.language = language;
         this.weekDay = weekDay;
     }
+
+    public StartTime getStartTime() {
+        return time;
+    }
 }

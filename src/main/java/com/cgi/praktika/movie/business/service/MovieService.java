@@ -1,5 +1,6 @@
 package com.cgi.praktika.movie.business.service;
 
+import com.cgi.praktika.movie.business.dto.MovieDTO;
 import com.cgi.praktika.movie.business.model.Movie;
 import com.cgi.praktika.movie.business.model.MovieSchedule;
 import com.cgi.praktika.movie.business.model.WeekDay;
@@ -10,49 +11,28 @@ import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
-    public static List<Movie> findAllMovies() {
-        return MovieSchedule.getMovies();
-    }
-
-    public List<Movie> findAllMondayMovies() {
+    public List<MovieDTO> findAllMovies() {
         return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getWeekDay() == WeekDay.MONDAY)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    public List<Movie> findAllTuesdayMovies() {
+    public List<MovieDTO> findAllMoviesByWeekDay(WeekDay weekDay) {
         return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getWeekDay() == WeekDay.TUESDAY)
+                .filter(movie -> movie.getWeekDay() == weekDay)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
-    public List<Movie> findAllWednesdayMovies() {
-        return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getWeekDay() == WeekDay.WEDNESDAY)
-                .collect(Collectors.toList());
-    }
-
-    public List<Movie> findAllThursdayMovies() {
-        return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getWeekDay() == WeekDay.THURSDAY)
-                .collect(Collectors.toList());
-    }
-
-    public List<Movie> findAllFridayMovies() {
-        return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getWeekDay() == WeekDay.FRIDAY)
-                .collect(Collectors.toList());
-    }
-
-    public List<Movie> findAllSaturdayMovies() {
-        return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getWeekDay() == WeekDay.SATURDAY)
-                .collect(Collectors.toList());
-    }
-
-    public List<Movie> findAllSundayMovies() {
-        return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getWeekDay() == WeekDay.SUNDAY)
-                .collect(Collectors.toList());
+    private MovieDTO convertToDTO(Movie movie) {
+        MovieDTO dto = new MovieDTO();
+        dto.setId(movie.getId());
+        dto.setName(movie.getName());
+        dto.setTime(movie.getStartTime().getLocalTime().toString());
+        dto.setGenre(movie.getGenre().getValue());
+        dto.setAgeRestriction(movie.getAgeRestriction().getDescription());
+        dto.setLanguage(movie.getLanguage().getLanguage());
+        dto.setWeekDay(movie.getWeekDay().toString());
+        return dto;
     }
 }
