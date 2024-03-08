@@ -13,4 +13,5 @@ public class MovieDTO {
     private String ageRestriction;
     private String language;
     private String weekDay;
+    private String imageUrl;
 }

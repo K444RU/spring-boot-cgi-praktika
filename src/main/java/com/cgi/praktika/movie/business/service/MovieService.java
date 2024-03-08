@@ -33,6 +33,7 @@ public class MovieService {
         dto.setAgeRestriction(movie.getAgeRestriction().getDescription());
         dto.setLanguage(movie.getLanguage().getLanguage());
         dto.setWeekDay(movie.getWeekDay().toString());
+        dto.setImageUrl(movie.getImageUrl());
         return dto;
     }
 }
