@@ -7,7 +7,7 @@ public enum Genre {
     HORROR(4, "Horror"),
     ACTION(5, "Action"),
     CARTOON(6, "Cartoon"),
-    SCIFI(7, "Sci-Fi"),
+    SCIFI(7, "SciFi"),
     FAMILY(8, "Family");
 
     private final int id;

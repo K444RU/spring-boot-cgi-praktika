@@ -76,7 +76,8 @@ public class MovieFilterController {
     @GetMapping("/by-start-time")
     @Operation(summary = "Filter each day movies by start time")
     public List<MovieDTO> getWeekDayMoviesByStartTime(
-            @RequestParam String weekDay, @RequestParam int startTime){
-        return movieFilterService.findAllWeekDayMoviesByStartTime(weekDay, startTime);
+            @RequestParam String weekDay, @RequestParam List<Integer> startTimes) {
+        return movieFilterService.findAllWeekDayMoviesByStartTime(weekDay, startTimes);
     }
+
 }

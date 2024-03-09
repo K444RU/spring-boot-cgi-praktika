@@ -39,48 +39,69 @@ public class MovieFilterService {
     }
 
 
-    public List<MovieDTO> findAllWeekDayMoviesByGenre(String genre, String weekDay) {
+    public List<MovieDTO> findAllWeekDayMoviesByGenre(String genres, String weekDay) {
         WeekDay requestedWeekDay = WeekDay.valueOf(weekDay.toUpperCase());
-        Genre requestedGenre = Genre.valueOf(genre.toUpperCase());
-        return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getGenre().equals(requestedGenre) && movie.getWeekDay() == requestedWeekDay)
-                .map(this::convertToMovieDTO)
-                .collect(Collectors.toList());
+        List<String> genreList = Arrays.asList(genres.split("\\s*,\\s*"));
+
+        // If no genres are selected, return all movies for the specified day
+        if (genreList.isEmpty()) {
+            return MovieSchedule.getMovies().stream()
+                    .filter(movie -> movie.getWeekDay() == requestedWeekDay)
+                    .map(this::convertToMovieDTO)
+                    .collect(Collectors.toList());
+        } else {
+            // If genres are selected, filter movies by genre and day
+            return MovieSchedule.getMovies().stream()
+                    .filter(movie -> genreList.stream()
+                            .anyMatch(genre -> genre.equalsIgnoreCase(movie.getGenre().getValue()))
+                            && movie.getWeekDay() == requestedWeekDay)
+                    .map(this::convertToMovieDTO)
+                    .collect(Collectors.toList());
+        }
     }
 
     public List<MovieDTO> findAllWeekDayMoviesByAgeRestrictions(String ageRestriction, String weekDay) {
         WeekDay requestedWeekDay = WeekDay.valueOf(weekDay.toUpperCase());
-        AgeRestriction requestedAgeRestriction = Arrays.stream(AgeRestriction.values())
-                .filter(age -> age.getDescription().equalsIgnoreCase(ageRestriction))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid age restriction"));
-
-        return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getAgeRestriction().equals(requestedAgeRestriction)
-                        && movie.getWeekDay() == requestedWeekDay)
-                .map(this::convertToMovieDTO)
-                .collect(Collectors.toList());
+        List<String> ageRestrictionList = Arrays.asList(ageRestriction.split("\\s*,\\s*"));
+        if (ageRestrictionList.isEmpty()){
+            return MovieSchedule.getMovies().stream()
+                    .filter(movie -> movie.getWeekDay() == requestedWeekDay)
+                    .map(this::convertToMovieDTO)
+                    .collect(Collectors.toList());
+        } else {
+            return MovieSchedule.getMovies().stream()
+                    .filter(movie -> ageRestrictionList.stream()
+                            .anyMatch(age -> age.equalsIgnoreCase(movie.getAgeRestriction().getDescription())) &&
+                            movie.getWeekDay() == requestedWeekDay)
+                    .map(this::convertToMovieDTO)
+                    .collect(Collectors.toList());
+        }
     }
 
     public List<MovieDTO> findAllWeekDayMoviesByLanguages(String language, String weekDay) {
         WeekDay requestedWeekDay = WeekDay.valueOf(weekDay.toUpperCase());
-        Language requestedLanguage = Language.valueOf(language.toUpperCase());
-        return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getLanguage().equals(requestedLanguage)
-                        && movie.getWeekDay() == requestedWeekDay)
-                .map(this::convertToMovieDTO)
-                .collect(Collectors.toList());
+        List<String> languageList = Arrays.asList(language.split("\\s*,\\s*"));
+        if (languageList.isEmpty()){
+            return MovieSchedule.getMovies().stream()
+                    .filter(movie -> movie.getWeekDay() == requestedWeekDay)
+                    .map(this::convertToMovieDTO)
+                    .collect(Collectors.toList());
+        } else {
+            return MovieSchedule.getMovies().stream()
+                    .filter(movie -> languageList.stream()
+                            .anyMatch(languages -> languages.equalsIgnoreCase(movie.getLanguage().getLanguage())) &&
+                            movie.getWeekDay() == requestedWeekDay)
+                    .map(this::convertToMovieDTO)
+                    .collect(Collectors.toList());
+        }
     }
 
-    public List<MovieDTO> findAllWeekDayMoviesByStartTime(String weekDay, int startTime) {
+    public List<MovieDTO> findAllWeekDayMoviesByStartTime(String weekDay, List<Integer> startTimes) {
         WeekDay requestedWeekDay = WeekDay.valueOf(weekDay.toUpperCase());
-        StartTime requestedStartTime = Arrays.stream(StartTime.values())
-                .filter(startTime1 -> startTime1.getHour() == startTime)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Invalid start time"));
 
         return MovieSchedule.getMovies().stream()
-                .filter(movie -> movie.getWeekDay() == requestedWeekDay && movie.getStartTime() == requestedStartTime)
+                .filter(movie -> startTimes.contains(movie.getStartTime().getHour())
+                        && movie.getWeekDay() == requestedWeekDay)
                 .map(this::convertToMovieDTO)
                 .collect(Collectors.toList());
     }
@@ -94,6 +115,7 @@ public class MovieFilterService {
         movieDTO.setAgeRestriction(movie.getAgeRestriction().getDescription());
         movieDTO.setLanguage(movie.getLanguage().getLanguage());
         movieDTO.setWeekDay(movie.getWeekDay().name());
+        movieDTO.setImageUrl(movie.getImageUrl());
         return movieDTO;
     }
 }
