@@ -4,6 +4,7 @@ import com.cgi.praktika.movie.business.movie.dto.MovieDTO;
 import com.cgi.praktika.movie.business.movie.model.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -114,5 +115,18 @@ public class MovieFilterService {
         movieDTO.setWeekDay(movie.getWeekDay().name());
         movieDTO.setImageUrl(movie.getImageUrl());
         return movieDTO;
+    }
+
+    public List<MovieDTO> findAllWeekDayMoviesByRecommendedGenres(List<Genre> recommendedGenres, String weekDay) {
+        WeekDay requestedWeekDay = WeekDay.valueOf(weekDay.toUpperCase());
+        List<MovieDTO> filteredMovies = new ArrayList<>();
+
+        for (Genre recommendedGenre : recommendedGenres) {
+            List<MovieDTO> genreMovies = MovieSchedule.getMovies().stream()
+                    .filter(movie -> movie.getGenre() == recommendedGenre && movie.getWeekDay() == requestedWeekDay)
+                    .map(this::convertToMovieDTO).toList();
+            filteredMovies.addAll(genreMovies);
+        }
+        return filteredMovies;
     }
 }

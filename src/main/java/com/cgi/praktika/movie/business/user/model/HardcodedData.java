@@ -55,7 +55,13 @@ public class HardcodedData {
                         Language.ENGLISH, StartTime.TIME_17_00),
                 new HistoryMovies(12, "Mission: impossible - Dead Reckoning part One", Genre.THRILLER,
                         AgeRestriction.ALLA_12_KEELATUD,
-                        Language.ENGLISH, StartTime.TIME_18_00)
+                        Language.ENGLISH, StartTime.TIME_18_00),
+                new HistoryMovies(13, "Dune: Part One", Genre.SCIFI,
+                        AgeRestriction.LUBATUD_KOIGILE,
+                        Language.MULTILINGUAL, StartTime.TIME_9_00),
+                new HistoryMovies(14, "The Equalizer 3", Genre.ACTION,
+                        AgeRestriction.ALLA_14_KEELATUD,
+                        Language.ENGLISH, StartTime.TIME_19_00)
         ));
     }
 }
