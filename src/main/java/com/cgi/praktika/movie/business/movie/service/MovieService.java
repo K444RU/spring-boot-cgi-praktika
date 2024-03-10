@@ -1,9 +1,9 @@
-package com.cgi.praktika.movie.business.service;
+package com.cgi.praktika.movie.business.movie.service;
 
-import com.cgi.praktika.movie.business.dto.MovieDTO;
-import com.cgi.praktika.movie.business.model.Movie;
-import com.cgi.praktika.movie.business.model.MovieSchedule;
-import com.cgi.praktika.movie.business.model.WeekDay;
+import com.cgi.praktika.movie.business.movie.dto.MovieDTO;
+import com.cgi.praktika.movie.business.movie.model.Movie;
+import com.cgi.praktika.movie.business.movie.model.MovieSchedule;
+import com.cgi.praktika.movie.business.movie.model.WeekDay;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

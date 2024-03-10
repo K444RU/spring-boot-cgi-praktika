@@ -1,7 +1,7 @@
-package com.cgi.praktika.movie.business.service;
+package com.cgi.praktika.movie.business.movie.service;
 
-import com.cgi.praktika.movie.business.dto.MovieDTO;
-import com.cgi.praktika.movie.business.model.*;
+import com.cgi.praktika.movie.business.movie.dto.MovieDTO;
+import com.cgi.praktika.movie.business.movie.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -42,15 +42,12 @@ public class MovieFilterService {
     public List<MovieDTO> findAllWeekDayMoviesByGenre(String genres, String weekDay) {
         WeekDay requestedWeekDay = WeekDay.valueOf(weekDay.toUpperCase());
         List<String> genreList = Arrays.asList(genres.split("\\s*,\\s*"));
-
-        // If no genres are selected, return all movies for the specified day
         if (genreList.isEmpty()) {
             return MovieSchedule.getMovies().stream()
                     .filter(movie -> movie.getWeekDay() == requestedWeekDay)
                     .map(this::convertToMovieDTO)
                     .collect(Collectors.toList());
         } else {
-            // If genres are selected, filter movies by genre and day
             return MovieSchedule.getMovies().stream()
                     .filter(movie -> genreList.stream()
                             .anyMatch(genre -> genre.equalsIgnoreCase(movie.getGenre().getValue()))
