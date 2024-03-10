@@ -1,8 +1,12 @@
 package com.cgi.praktika.movie.business.movie.controller;
 
 import com.cgi.praktika.movie.business.movie.dto.MovieDTO;
+import com.cgi.praktika.movie.business.movie.model.Genre;
 import com.cgi.praktika.movie.business.movie.model.WeekDay;
 import com.cgi.praktika.movie.business.movie.service.MovieFilterService;
+import com.cgi.praktika.movie.business.user.model.HardcodedData;
+import com.cgi.praktika.movie.business.user.model.HistoryMovies;
+import com.cgi.praktika.movie.business.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +20,12 @@ import java.util.List;
 public class MovieFilterController {
 
     private final MovieFilterService movieFilterService;
+    private final UserService userService;
 
 
-    public MovieFilterController(MovieFilterService movieFilterService) {
+    public MovieFilterController(MovieFilterService movieFilterService, UserService userService) {
         this.movieFilterService = movieFilterService;
+        this.userService = userService;
     }
 
     @GetMapping("/all/genres")
@@ -78,6 +84,17 @@ public class MovieFilterController {
     public List<MovieDTO> getWeekDayMoviesByStartTime(
             @RequestParam String weekDay, @RequestParam List<Integer> startTimes) {
         return movieFilterService.findAllWeekDayMoviesByStartTime(weekDay, startTimes);
+    }
+
+    @GetMapping("/by-recommended-genres")
+    @Operation(summary = "Filter each day movies by recommended genres")
+    public List<MovieDTO> getWeekDayMoviesByRecommendedGenres(@RequestParam int userId, @RequestParam String weekDay) {
+        List<HistoryMovies> userHistory = HardcodedData.getHardcodedMovies();
+        System.out.println("HISTORY : " + userHistory);
+        List<Genre> recommendedGenres = userService.getRecommendedGenres(userId, userHistory);
+        System.out.println("RECOMMENDED GENRES : " + recommendedGenres);
+
+        return movieFilterService.findAllWeekDayMoviesByRecommendedGenres(recommendedGenres, weekDay);
     }
 
 }

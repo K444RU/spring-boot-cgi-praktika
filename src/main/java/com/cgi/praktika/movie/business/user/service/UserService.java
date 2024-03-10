@@ -1,8 +1,13 @@
 package com.cgi.praktika.movie.business.user.service;
 
+import com.cgi.praktika.movie.business.movie.model.Genre;
 import com.cgi.praktika.movie.business.user.model.HardcodedData;
+import com.cgi.praktika.movie.business.user.model.HistoryMovies;
+import com.cgi.praktika.movie.business.user.model.RecommendationAlgorithm;
 import com.cgi.praktika.movie.business.user.model.User;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -15,5 +20,9 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    public List<Genre> getRecommendedGenres(int userId, List<HistoryMovies> userHistory) {
+        return RecommendationAlgorithm.recommendGenres(userId,userHistory);
     }
 }
