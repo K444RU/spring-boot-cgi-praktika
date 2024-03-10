@@ -1,4 +1,4 @@
-package com.cgi.praktika.movie.business.model;
+package com.cgi.praktika.movie.business.movie.model;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ public class Movie {
     private AgeRestriction ageRestriction;
     private Language language;
     private WeekDay weekDay;
-    private String imageUrl; // Add this line for the image URL
+    private String imageUrl;
 
     public Movie(int id, String name, StartTime time, Genre genre, AgeRestriction ageRestriction, Language language, WeekDay weekDay, String imageUrl) {
         this.id = id;
@@ -21,7 +21,7 @@ public class Movie {
         this.ageRestriction = ageRestriction;
         this.language = language;
         this.weekDay = weekDay;
-        this.imageUrl = imageUrl; // Initialize the image URL in the constructor
+        this.imageUrl = imageUrl;
     }
 
     public StartTime getStartTime() {

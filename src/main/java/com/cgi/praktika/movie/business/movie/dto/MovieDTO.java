@@ -1,4 +1,4 @@
-package com.cgi.praktika.movie.business.dto;
+package com.cgi.praktika.movie.business.movie.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

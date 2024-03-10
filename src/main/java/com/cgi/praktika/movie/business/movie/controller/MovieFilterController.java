@@ -1,8 +1,8 @@
-package com.cgi.praktika.movie.business.controller;
+package com.cgi.praktika.movie.business.movie.controller;
 
-import com.cgi.praktika.movie.business.dto.MovieDTO;
-import com.cgi.praktika.movie.business.model.*;
-import com.cgi.praktika.movie.business.service.MovieFilterService;
+import com.cgi.praktika.movie.business.movie.dto.MovieDTO;
+import com.cgi.praktika.movie.business.movie.model.WeekDay;
+import com.cgi.praktika.movie.business.movie.service.MovieFilterService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
