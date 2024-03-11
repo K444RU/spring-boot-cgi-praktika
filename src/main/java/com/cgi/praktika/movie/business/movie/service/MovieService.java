@@ -7,6 +7,7 @@ import com.cgi.praktika.movie.business.movie.model.WeekDay;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,6 +16,12 @@ public class MovieService {
         return MovieSchedule.getMovies().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
+    }
+    public MovieDTO findMovieInformationByMovieId(int movieId) {
+        Optional<Movie> foundMovie = MovieSchedule.getMovies().stream()
+                .filter(movie -> movie.getId() == movieId)
+                .findFirst();
+        return foundMovie.map(this::convertToDTO).orElse(null);
     }
 
     public List<MovieDTO> findAllMoviesByWeekDay(WeekDay weekDay) {
@@ -36,4 +43,6 @@ public class MovieService {
         dto.setImageUrl(movie.getImageUrl());
         return dto;
     }
+
+
 }

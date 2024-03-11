@@ -27,6 +27,12 @@ public class MovieController {
         return movieService.findAllMovies();
     }
 
+    @GetMapping("/info")
+    @Operation(summary = "Get movie information by movie ID")
+    public MovieDTO getMovieInformationByMovieId(@RequestParam int movieId){
+        return movieService.findMovieInformationByMovieId(movieId);
+    }
+
     @GetMapping("/by-weekday")
     @Operation(summary = "Filter movies by weekday")
     public List<MovieDTO> getMoviesByWeekDay(@RequestParam String weekDay) {
