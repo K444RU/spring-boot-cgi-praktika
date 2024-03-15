@@ -1,8 +1,12 @@
 package com.cgi.praktika.movie.business.movie.model;
 
+import lombok.Getter;
+
 import java.time.LocalTime;
 
+@Getter
 public enum StartTime {
+
     TIME_9_00(LocalTime.of(9,0)),
     TIME_10_00(LocalTime.of(10,0)),
     TIME_11_00(LocalTime.of(11,0)),
@@ -19,10 +23,6 @@ public enum StartTime {
 
     StartTime(LocalTime localTime) {
         this.localTime = localTime;
-    }
-
-    public LocalTime getLocalTime() {
-        return localTime;
     }
 
     public int getHour() {

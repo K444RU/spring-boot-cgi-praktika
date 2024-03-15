@@ -1,6 +1,10 @@
 package com.cgi.praktika.movie.business.movie.model;
 
+import lombok.Getter;
+
+@Getter
 public enum Genre {
+
     COMEDY(1, "Comedy"),
     DRAMA(2, "Drama"),
     THRILLER(3, "Thriller"),
@@ -16,13 +20,5 @@ public enum Genre {
     Genre(int id, String value) {
         this.id = id;
         this.value = value;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getValue() {
-        return value;
     }
 }

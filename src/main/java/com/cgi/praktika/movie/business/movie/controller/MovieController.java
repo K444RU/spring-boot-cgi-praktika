@@ -23,13 +23,13 @@ public class MovieController {
 
     @GetMapping("/all")
     @Operation(summary = "Get All available movies")
-    public List<MovieDTO> getAllMovies(){
+    public List<MovieDTO> getAllMovies() {
         return movieService.findAllMovies();
     }
 
     @GetMapping("/info")
     @Operation(summary = "Get movie information by movie ID")
-    public MovieDTO getMovieInformationByMovieId(@RequestParam int movieId){
+    public MovieDTO getMovieInformationByMovieId(@RequestParam int movieId) {
         return movieService.findMovieInformationByMovieId(movieId);
     }
 

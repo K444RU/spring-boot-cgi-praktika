@@ -4,8 +4,8 @@ import com.cgi.praktika.movie.business.movie.dto.MovieDTO;
 import com.cgi.praktika.movie.business.movie.model.Genre;
 import com.cgi.praktika.movie.business.movie.model.WeekDay;
 import com.cgi.praktika.movie.business.movie.service.MovieFilterService;
-import com.cgi.praktika.movie.business.user.model.HardcodedData;
-import com.cgi.praktika.movie.business.user.model.HistoryMovies;
+import com.cgi.praktika.movie.business.user.data.UserHardcodedData;
+import com.cgi.praktika.movie.business.user.model.UserMovieHistory;
 import com.cgi.praktika.movie.business.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,38 +30,38 @@ public class MovieFilterController {
 
     @GetMapping("/all/genres")
     @Operation(summary = "Get all movie genres")
-    public List<String> getAllMovieGenres(){
+    public List<String> getAllMovieGenres() {
         return movieFilterService.findAllMovieGenres();
     }
 
     @GetMapping("/all/age-restrictions")
     @Operation(summary = "Get all movie age restrictions")
-    public List<String> getAllMovieAgeRestrictions(){
+    public List<String> getAllMovieAgeRestrictions() {
         return movieFilterService.findAllMovieAgeRestrictions();
     }
 
     @GetMapping("/all/languages")
     @Operation(summary = "Get all movie genres")
-    public List<String> getAllMovieLanguages(){
+    public List<String> getAllMovieLanguages() {
         return movieFilterService.findAllMovieLanguages();
     }
 
     @GetMapping("/all/start-times")
     @Operation(summary = "Get all movie start times")
-    public List<Integer> getAllMovieStartTimes(){
+    public List<Integer> getAllMovieStartTimes() {
         return movieFilterService.findAllMovieStartTimes();
     }
 
     @GetMapping("/all/week-days")
     @Operation(summary = "Get all week days")
-    public List<WeekDay> getAllWeekDays(){
+    public List<WeekDay> getAllWeekDays() {
         return movieFilterService.findAllWeekDays();
     }
 
 
     @GetMapping("/by-genre")
     @Operation(summary = "Filter each day movies by genre")
-    public List<MovieDTO> getWeekDayMoviesByGenre(@RequestParam String genre, @RequestParam String weekDay){
+    public List<MovieDTO> getWeekDayMoviesByGenre(@RequestParam String genre, @RequestParam String weekDay) {
         return movieFilterService.findAllWeekDayMoviesByGenre(genre, weekDay);
     }
 
@@ -75,7 +75,7 @@ public class MovieFilterController {
     @GetMapping("/by-language")
     @Operation(summary = "Filter each day movies by language")
     public List<MovieDTO> getWeekDayMoviesByLanguages(
-            @RequestParam String language, @RequestParam String weekDay){
+            @RequestParam String language, @RequestParam String weekDay) {
         return movieFilterService.findAllWeekDayMoviesByLanguages(language, weekDay);
     }
 
@@ -83,18 +83,13 @@ public class MovieFilterController {
     @Operation(summary = "Filter each day movies by start time")
     public List<MovieDTO> getWeekDayMoviesByStartTime(
             @RequestParam String weekDay, @RequestParam List<Integer> startTimes) {
-        return movieFilterService.findAllWeekDayMoviesByStartTime(weekDay, startTimes);
+        return movieFilterService.findAllWeekDayMoviesByStartTime(startTimes, weekDay);
     }
 
     @GetMapping("/by-recommended-genres")
     @Operation(summary = "Filter each day movies by recommended genres")
     public List<MovieDTO> getWeekDayMoviesByRecommendedGenres(@RequestParam int userId, @RequestParam String weekDay) {
-        List<HistoryMovies> userHistory = HardcodedData.getHardcodedMovies();
-        System.out.println("HISTORY : " + userHistory);
-        List<Genre> recommendedGenres = userService.getRecommendedGenres(userId, userHistory);
-        System.out.println("RECOMMENDED GENRES : " + recommendedGenres);
-
+        List<Genre> recommendedGenres = userService.getRecommendedGenres(userId);
         return movieFilterService.findAllWeekDayMoviesByRecommendedGenres(recommendedGenres, weekDay);
     }
-
 }

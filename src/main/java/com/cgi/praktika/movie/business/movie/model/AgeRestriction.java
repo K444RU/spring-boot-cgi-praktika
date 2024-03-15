@@ -1,8 +1,12 @@
 package com.cgi.praktika.movie.business.movie.model;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 
+@Getter
 public enum AgeRestriction {
+
     ALLA_6(1, "Alla 6 a. mittesoovitav"),
     ALLA_12(2, "Alla 12 a. mittesoovitav"),
     PEREFILM(3, "Perefilm"),
@@ -16,27 +20,5 @@ public enum AgeRestriction {
     AgeRestriction(int id, String description) {
         this.id = id;
         this.description = description;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public static AgeRestriction fromId(int id) {
-        return Arrays.stream(values())
-                .filter(value -> value.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No enum constant for id: " + id));
-    }
-
-    public static AgeRestriction fromDescription(String description) {
-        return Arrays.stream(values())
-                .filter(value -> value.getDescription().equalsIgnoreCase(description))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("No enum constant for description: " + description));
     }
 }
